@@ -1,0 +1,178 @@
+Country,Region,HDI,CPI
+Afghanistan,AP,0.498,15
+Albania,ECA,0.785,38
+Algeria,MENA,0.754,33
+Angola,SSA,0.858,19
+Argentina,AME,0.825,39
+Armenia,ECA,0.755,35
+Australia,AP,0.939,77
+Austria,WE/EU,0.908,75
+Azerbaijan,ECA,0.757,31
+Bahamas,AME,0.807,65
+Bahrain,MENA,0.846,36
+Bangladesh,AP,0.608,28
+Barbados,AME,0.8,68
+Belarus,ECA,0.808,44
+Belgium,WE/EU,0.916,75
+Benin,SSA,0.515,39
+Bhutan,AP,0.612,67
+Bolivia,AME,0.693,33
+Bosnia and Herzegovina,ECA,0.768,38
+Botswana,SSA,0.717,61
+Brazil,AME,0.759,37
+Brunei Darussalam,AP,0.853,62
+Bulgaria,WE/EU,0.813,43
+Burkina Faso,SSA,0.423,42
+Burundi,SSA,0.417,22
+Cabo Verde,SSA,0.654,55
+Cambodia,AP,0.582,21
+Cameroon,SSA,0.556,25
+Canada,AME,0.926,82
+Central African Republic,SSA,0.367,23
+Chad,SSA,0.404,20
+Chile,AME,0.843,67
+China,AP,0.752,41
+Colombia,AME,0.747,37
+Comoros,SSA,0.503,27
+Congo,SSA,0.606,21
+Costa Rica,AME,0.794,59
+C?te D'Ivoire,SSA,0.492,36
+Croatia,WE/EU,0.831,49
+Cuba,AME,0.777,47
+Cyprus,WE/EU,0.869,57
+Czech Republic,WE/EU,0.888,57
+Democratic Republic of the Congo,SSA,0.457,21
+Denmark,WE/EU,0.929,88
+Djibouti,SSA,0.476,31
+Dominica,AME,0.715,57
+Dominican Republic,AME,0.736,29
+Ecuador,AME,0.752,32
+Egypt,MENA,0.696,32
+El Salvador,AME,0.674,33
+Equatorial Guinea,SSA,0.591,17
+Eritrea,SSA,0.44,20
+Estonia,WE/EU,0.871,71
+Ethiopia,SSA,0.463,35
+Finland,WE/EU,0.92,85
+France,WE/EU,0.901,70
+Gabon,SSA,0.702,32
+Gambia,SSA,0.46,30
+Georgia,ECA,0.78,56
+Germany,WE/EU,0.936,81
+Ghana,SSA,0.592,40
+Greece,WE/EU,0.87,48
+Grenada,AME,0.772,52
+Guatemala,AME,0.65,28
+Guinea,SSA,0.459,27
+Guinea Bissau,SSA,0.455,17
+Guyana,AME,0.654,38
+Haiti,AME,0.498,22
+Honduras,AME,0.617,29
+Hong Kong,AP,0.933,77
+Hungary,WE/EU,0.838,45
+Iceland,WE/EU,0.935,77
+India,AP,0.64,40
+Indonesia,AP,0.694,37
+Iran,MENA,0.798,30
+Iraq,MENA,0.685,18
+Ireland,WE/EU,0.938,74
+Israel,MENA,0.903,62
+Italy,WE/EU,0.88,50
+Jamaica,AME,0.732,44
+Japan,AP,0.909,73
+Jordan,MENA,0.735,48
+Kazakhstan,ECA,0.8,31
+Kenya,SSA,0.59,28
+"Korea, North",AP,0.588,17
+"Korea, South",AP,0.612,54
+Kosovo,ECA,0.903,39
+Kuwait,MENA,0.803,39
+Kyrgyzstan,ECA,0.672,29
+Laos,AP,0.601,29
+Latvia,WE/EU,0.847,58
+Lebanon,MENA,0.757,28
+Lesotho,SSA,0.52,42
+Liberia,SSA,0.435,31
+Libya,MENA,0.706,17
+Lithuania,WE/EU,0.916,59
+Luxembourg,WE/EU,0.858,82
+Macedonia,ECA,0.904,35
+Madagascar,SSA,0.519,24
+Malawi,SSA,0.477,31
+Malaysia,AP,0.802,47
+Maldives,AP,0.717,33
+Mali,SSA,0.427,31
+Malta,WE/EU,0.878,56
+Mauritania,SSA,0.52,28
+Mauritius,SSA,0.79,50
+Mexico,AME,0.774,29
+Moldova,ECA,0.7,31
+Mongolia,AP,0.741,36
+Montenegro,ECA,0.814,46
+Morocco,MENA,0.667,40
+Mozambique,SSA,0.437,25
+Myanmar,AP,0.578,30
+Namibia,SSA,0.647,51
+Nepal,AP,0.574,31
+Netherlands,WE/EU,0.931,82
+New Zealand,AP,0.917,89
+Nicaragua,AME,0.658,26
+Niger,SSA,0.354,33
+Nigeria,SSA,0.532,27
+Norway,WE/EU,0.953,85
+Oman,MENA,0.821,44
+Pakistan,AP,0.562,32
+Panama,AME,0.789,37
+Papua New Guinea,AP,0.544,29
+Paraguay,AME,0.702,29
+Peru,AME,0.75,37
+Philippines,AP,0.699,34
+Poland,WE/EU,0.865,60
+Portugal,WE/EU,0.847,63
+Qatar,MENA,0.856,63
+Romania,WE/EU,0.811,48
+Russia,ECA,0.816,29
+Rwanda,SSA,0.524,55
+Saint Lucia,AME,0.747,55
+Saint Vincent and the Grenadines,AME,0.723,58
+Sao Tome and Principe,SSA,0.589,46
+Saudi Arabia,MENA,0.853,49
+Senegal,SSA,0.505,45
+Serbia,ECA,0.787,41
+Seychelles,SSA,0.797,60
+Sierra Leone,SSA,0.419,30
+Singapore,AP,0.932,84
+Slovakia,WE/EU,0.855,50
+Slovenia,WE/EU,0.896,61
+Solomon Islands,AP,0.546,39
+South Africa,SSA,0.699,43
+South Sudan,SSA,0.388,12
+Spain,WE/EU,0.891,57
+Sri Lanka,AP,0.77,38
+Sudan,SSA,0.502,16
+Suriname,AME,0.72,41
+Sweden,WE/EU,0.933,84
+Switzerland,WE/EU,0.944,85
+Syria,MENA,0.536,14
+Tajikistan,ECA,0.65,21
+Tanzania,SSA,0.538,36
+Thailand,AP,0.755,37
+Timor-Leste,AP,0.625,38
+Togo,SSA,0.503,32
+Trinidad and Tobago,AME,0.784,41
+Tunisia,MENA,0.735,42
+Turkey,ECA,0.791,40
+Turkmenistan,ECA,0.706,19
+Uganda,SSA,0.516,26
+Ukraine,ECA,0.751,30
+United Arab Emirates,MENA,0.863,71
+United Kingdom,WE/EU,0.922,82
+United States of America,AME,0.924,75
+Uruguay,AME,0.804,70
+Uzbekistan,ECA,0.71,22
+Vanuatu,AP,0.603,43
+Venezuela,AME,0.761,18
+Vietnam,AP,0.694,35
+Yemen,MENA,0.452,16
+Zambia,SSA,0.588,37
+Zimbabwe,SSA,0.535,22

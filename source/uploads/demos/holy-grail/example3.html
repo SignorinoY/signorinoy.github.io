@@ -1,0 +1,57 @@
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style type="text/css">
+        header,
+        footer {
+            flex: 0 0 50px;
+            background: #ccc;
+        }
+
+        .HolyGrail {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .HolyGrail-body {
+            display: flex;
+            flex: 1;
+        }
+
+        .HolyGrail-content {
+            flex: 1;
+            background: #4DBCB0;
+        }
+
+        .HolyGrail-nav,
+        .HolyGrail-ads {
+            /* 12em is the width of the columns */
+            flex: 0 0 12em;
+            background: #daf1ef;
+        }
+
+        .HolyGrail-nav {
+            /* put the nav on the left */
+            order: -1;
+        }
+    </style>
+</head>
+
+<body class="HolyGrail">
+    <header></header>
+    <div class="HolyGrail-body">
+        <main class="HolyGrail-content"></main>
+        <nav class="HolyGrail-nav"></nav>
+        <aside class="HolyGrail-ads"></aside>
+    </div>
+    <footer></footer>
+</body>
+
+</html>
