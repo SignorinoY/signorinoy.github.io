@@ -118,3 +118,14 @@ filter_optimize:
   # set the priority of this plugin,
   # lower means it will be executed first, default is 10
   priority: 12
+
+aplayer:
+  #script_dir: some/place
+  #style_dir: some/place
+  cdn: //cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.js
+  style_cdn: //cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.css
+  meting: true
+  #meting_api: http://xxx/api.php
+  #meting_cdn: http://xxx/Meing.min.js
+  asset_inject: true
+  #externalLink: http://xxx/aplayer.min.js
