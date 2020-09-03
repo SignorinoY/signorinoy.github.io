@@ -1,6 +1,6 @@
 ---
 title: SSH (Secure Shell) 原理与应用
-categories: 折腾
+categories: 开发者手册
 tags: []
 date: 2020-02-20 23:40:45
 ---
