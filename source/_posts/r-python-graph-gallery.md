@@ -1,6 +1,6 @@
 ---
 title: The R\Python Graph Gallery
-categories: 折腾
+categories: 闲来无事
 tags: []
 date: 2019-05-22 22:23:01
 ---

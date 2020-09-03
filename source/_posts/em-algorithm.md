@@ -1,6 +1,6 @@
 ---
 title: EM 算法
-categories: 机器学习
+categories: 统计学
 tags: [EM 算法]
 date: 2019-06-19 19:26:44
 ---

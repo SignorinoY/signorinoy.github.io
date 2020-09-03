@@ -1,6 +1,6 @@
 ---
 title: 中文文档排版指南
-categories: 折腾
+categories: 开发者手册
 tags: []
 date: 2020-03-24 17:59:24
 ---

@@ -1,6 +1,6 @@
 ---
 title: 《机器学习》公式推导
-categories: 机器学习
+categories: 读书笔记
 tags: []
 date: 2020-05-31 23:50:50
 ---

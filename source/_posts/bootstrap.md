@@ -1,6 +1,6 @@
 ---
 title: Bootstrap
-categories: 机器学习
+categories: 统计学
 tags: [Bootstrap]
 date: 2019-03-11 23:37:37
 ---

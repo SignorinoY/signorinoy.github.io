@@ -1,5 +1,5 @@
 ---
-title: 读书笔记：《数学之美》
+title: 《数学之美》
 categories: 读书笔记
 tags: []
 date: 2020-03-21 09:47:36
