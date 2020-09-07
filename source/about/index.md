@@ -20,3 +20,7 @@ You promised me an ocean of stars, but you actually gave me Facebook.
 ## 2020/03/28
 
 创造一种完全基于人类整个群体的内心正面想法的信息推荐系统~
+
+## 2020/09/08
+
+王侯将相，宁有种乎？
