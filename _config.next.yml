@@ -5,8 +5,14 @@
 # ===============================================================
 
 # ---------------------------------------------------------------
+# Scheme Settings
+# ---------------------------------------------------------------
+
+# Schemes
+scheme: Gemini
+
+# ---------------------------------------------------------------
 # Site Information Settings
-# See: https://theme-next.js.org/docs/getting-started/
 # ---------------------------------------------------------------
 
 favicon:
@@ -16,21 +22,8 @@ favicon:
   #safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
 
-footer:
-  # Specify the date when the site was setup. If not defined, current year will be used.
-  since: 2017
-      
-  # Icon between year and copyright info.
-  icon:
-    # Icon name in Font Awesome. See: https://fontawesome.com/icons
-    name: fa fa-heart
-    # If you want to animate the icon, set it to true.
-    animated: true
-    # Change the color of icon, using Hex Code.
-    color: "#ff0000"
-
 # Creative Commons 4.0 International License.
-# See: https://creativecommons.org/share-your-work/licensing-types-examples
+# See: https://creativecommons.org/about/cclicenses/
 # Available values of license: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | zero
 # You can set a language value if you prefer a translated version of CC license, e.g. deed.zh
 # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
@@ -39,16 +32,6 @@ creative_commons:
   sidebar: true
   post: true
   language: deed.zh
-
-# ---------------------------------------------------------------
-# Scheme Settings
-# ---------------------------------------------------------------
-
-# Schemes
-#scheme: Muse
-#scheme: Mist
-#scheme: Pisces
-scheme: Gemini
 
 # ---------------------------------------------------------------
 # Menu Settings
@@ -64,12 +47,7 @@ menu:
     default: about/ || fa fa-user
     Allbum: album/ || fa fa-camera
     Share: share/ || fa fa-share-alt
-  #tags: /tags/ || fa fa-tags
-  #categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
-  #schedule: /schedule/ || fa fa-calendar
-  #sitemap: /sitemap.xml || fa fa-sitemap
-  #commonweal: /404/ || fa fa-heartbeat
 
 # ---------------------------------------------------------------
 # Sidebar Settings
@@ -92,14 +70,6 @@ avatar:
 social:
   GitHub: https://github.com/signorinoy || fab fa-github
   E-Mail: mailto:meetziyang@gmail.com || fa fa-envelope
-  #Weibo: https://weibo.com/Signorino_Y || fab fa-weibo
-  #Google: https://plus.google.com/yourname || fab fa-google
-  #Twitter: https://twitter.com/SignorinoY_ || fab fa-twitter
-  #FB Page: https://www.facebook.com/yourname || fab fa-facebook
-  #StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow
-  #YouTube: https://youtube.com/yourname || fab fa-youtube
-  #Instagram: https://instagram.com/yourname || fab fa-instagram
-  #Skype: skype:yourname?call|chat || fab fa-skype
 
 social_icons:
   enable: true
@@ -109,6 +79,24 @@ social_icons:
 # Blog rolls
 links:
   ✂JiZiTi: https://www.jiziti.fun/
+
+# ---------------------------------------------------------------
+# Footer Settings
+# See: https://theme-next.js.org/docs/theme-settings/footer
+# ---------------------------------------------------------------
+
+footer:
+  # Specify the date when the site was setup. If not defined, current year will be used.
+  since: 2017
+      
+  # Icon between year and copyright info.
+  icon:
+    # Icon name in Font Awesome. See: https://fontawesome.com/icons
+    name: fa fa-heart
+    # If you want to animate the icon, set it to true.
+    animated: true
+    # Change the color of icon, using Hex Code.
+    color: "#ff0000"
 
 # ---------------------------------------------------------------
 # Post Settings
@@ -124,15 +112,6 @@ post_meta:
     another_day: false
   categories: true
 
-# Post wordcount display settings
-# Dependencies: https://github.com/next-theme/hexo-word-counter
-symbols_count_time:
-  separated_meta: true
-  item_text_total: false
-
-# Use icon instead of the symbol # to indicate the tag at the bottom of the post
-tag_icon: false
-
 # Related popular posts
 # Dependencies: https://github.com/tea3/hexo-related-popular-posts
 related_posts:
@@ -145,14 +124,6 @@ related_posts:
     #isDate: false
     #isImage: false
     #isExcerpt: false
-
-# Subscribe through Telegram Channel, Twitter, etc.
-# Usage: `Key: permalink || icon` (Font Awesome)
-follow_me:
-  #Twitter: https://twitter.com/username || fab fa-twitter
-  #Telegram: https://t.me/channel_name || fab fa-telegram
-  #WeChat: /images/wechat_channel.jpg || fab fa-weixin
-  RSS: /atom.xml || fa fa-rss
 
 # ---------------------------------------------------------------
 # Misc Theme Settings
@@ -246,9 +217,6 @@ font:
 # See: https://theme-next.js.org/docs/theme-settings/seo
 # ---------------------------------------------------------------
 
-# Disable Baidu transformation on mobile devices.
-disable_baidu_transformation: true
-
 # Automatically add external URL with Base64 encrypt & decrypt.
 exturl: true
 
@@ -267,9 +235,6 @@ yandex_site_verification:
 # Baidu Webmaster tools verification.
 # See: https://ziyuan.baidu.com/site
 baidu_site_verification:
-
-# Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
-baidu_push: true
 
 # ---------------------------------------------------------------
 # Third Party Plugins & Services Settings
@@ -393,8 +358,8 @@ local_search:
 # Use Animate.css to animate everything.
 # For more information: https://animate.style
 motion:
-  enable: false
-  async: false
+  enable: true
+  async: true
   transition:
     # All available transition variants: https://theme-next.js.org/animate/
     post_block: fadeIn
