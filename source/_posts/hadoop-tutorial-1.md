@@ -1,7 +1,7 @@
 ---
 title: Hadoop学习笔记（1）：安装与伪分布式
 categories: 开发者手册
-tags: [Hadoop，分布式计算]
+tags: [Hadoop, 分布式计算]
 date: 2021-02-01 00:12:12
 permalink: 
 ---
@@ -39,11 +39,17 @@ cd /usr/local/hadoop/hadoop-3.3.0
 ./bin/hadoop version
 ```
 
-{% note warning %}
+{% note info %}
 
-若提示 `ERROR: JAVA_HOME is not set and could not be found.` 可手动设置 `JAVA_HOME` 环境变量，如下
+在开始运行前，需修改`./etc/hadoop/hadoop-env.sh`中定义的`JAVA_HOME`。
 
-```text
+```sh
+vim ./etc/hadoop/hadoop-env.sh
+```
+
+修改 `export JAVA_HOME=${JAVA_HOME}` 为
+
+```sh
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ```
 
@@ -134,23 +140,30 @@ vim ./etc/hadoop/hdfs-site.xml
 ./sbin/start-dfs.sh
 ```
 
-在看到提示后，输入 hadoop 用户密码.
-
 {% note warning %}
 
-在运行过程中，发现提示环境变量`JAVA_HOME`未定义，需修改`/etc/hadoop/hadoop-env.sh`中定义的`JAVA_HOME`。
+在执行时，发现出现 `no HDFS_NAMENODE_USER defined` 错误（未定义 NameNode 用户），参考 [HDFS_NAMENODE_USER, HDFS_DATANODE_USER & HDFS_SECONDARYNAMENODE_USER not defined](https://stackoverflow.com/questions/48129029/hdfs-namenode-user-hdfs-datanode-user-hdfs-secondarynamenode-user-not-defined)，定义相关用户
 
 ```sh
-vim ./etc/hadoop/hadoop-env.sh
+export HDFS_NAMENODE_USER="root"
+export HDFS_DATANODE_USER="root"
+export HDFS_SECONDARYNAMENODE_USER="root"
+export YARN_RESOURCEMANAGER_USER="root"
+export YARN_NODEMANAGER_USER="root"
 ```
-
-修改 `export JAVA_HOME=${JAVA_HOME}` 为 `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64`
 
 {% endnote %}
 
 启动完成后，可以通过命令 jps 来判断是否成功启动，若成功启动则会列出如下进程: `NameNode`、 `DataNode`和`SecondaryNameNode`。
 
-{% note warning %}
+```text
+8487 DataNode
+8298 NameNode
+8715 SecondaryNameNode
+9387 Jps
+```
+
+{% note info %}
 
 如果 `SecondaryNameNode` 没有启动，请运行 `./sbin/stop-dfs.sh` 关闭进程，然后再次尝试启动尝试.
 
@@ -187,6 +200,11 @@ vim ./etc/hadoop/hadoop-env.sh
 
 ```sh
 ./bin/hdfs dfs -cat output/*
+```
+
+```text
+1       dfsadmin
+1       dfs.replication
 ```
 
 我们也可以将运行结果取回到本地：
