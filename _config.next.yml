@@ -352,6 +352,20 @@ local_search:
   preload: false
 
 # ---------------------------------------------------------------
+# Tags Settings
+# See: https://theme-next.js.org/docs/tag-plugins/
+# ---------------------------------------------------------------
+
+# PDF tag
+# NexT will try to load pdf files natively, if failed, pdf.js will be used.
+# So, you have to install the dependency of pdf.js if you want to use pdf tag and make it available to all browsers.
+# Dependencies: https://github.com/next-theme/theme-next-pdf
+pdf:
+  enable: true
+  # Default height
+  height: 500px
+
+# ---------------------------------------------------------------
 # Animation Settings
 # ---------------------------------------------------------------
 
