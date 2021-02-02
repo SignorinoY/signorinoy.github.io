@@ -5,7 +5,7 @@
 # Site
 title: SignorinoY
 subtitle: ''
-description: '丢掉幻想，准备斗争。'
+description: ''
 keywords:
 author: SignorinoY
 language: zh-CN
@@ -34,6 +34,7 @@ skip_render:
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post
+auto_spacing: true
 titlecase: false # Transform title into titlecase
 external_link:
   enable: true # Open external links in new tab
@@ -43,7 +44,7 @@ filename_case: 0
 render_drafts: false
 post_asset_folder: false
 relative_link: false
-future: true
+future: false
 highlight:
   enable: true
   line_number: true
@@ -52,7 +53,7 @@ highlight:
   wrap: true
   hljs: false
 prismjs:
-  enable: false
+  enable: true
   preprocess: true
   line_number: true
   tab_replace: ''
