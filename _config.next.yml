@@ -103,6 +103,10 @@ footer:
 # See: https://theme-next.js.org/docs/theme-settings/posts
 # ---------------------------------------------------------------
 
+# Read more button
+# If true, the read more button will be displayed in excerpt section.
+read_more_btn: false
+
 # Post meta display settings
 post_meta:
   item_text: true
