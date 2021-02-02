@@ -1,13 +1,11 @@
 ---
-title: About Me
+title: 我是谁
 date: 2019-03-11 19:33:38
 ---
 
 {% cq %}
 You promised me an ocean of stars, but you actually gave me Facebook.
 {% endcq %}
-
-## 我是谁
 
 一个在成都上学的非典型新疆人， 喜好一切很 “酷🆒” 的东西 （包括但不限于各种编程技巧或实用或有趣应用等）， 追求一切美好的事物 （包括但不限于物品收纳、 文字排版等）。
 

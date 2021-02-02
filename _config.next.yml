@@ -45,9 +45,9 @@ menu:
   home: / || fa fa-home
   about:
     default: about/ || fa fa-user
-    Allbum: album/ || fa fa-camera
-    Share: share/ || fa fa-share-alt
-    Resume: resume/ || fa fa-envelope-open
+    相册: album/ || fa fa-camera
+    分享: share/ || fa fa-share-alt
+    简历: resume/ || fa fa-envelope-open
   archives: /archives/ || fa fa-archive
 
 # ---------------------------------------------------------------

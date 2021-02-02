@@ -1,5 +1,5 @@
 ---
-title: Resume
+title: 简历
 ---
 
 ## 教育背景
