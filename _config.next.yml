@@ -136,6 +136,19 @@ related_posts:
 # See: https://theme-next.js.org/docs/theme-settings/
 # ---------------------------------------------------------------
 
+# Preconnect CDN for fonts and plugins.
+# For more information: https://www.w3.org/TR/resource-hints/#preconnect
+preconnect: true
+
+# Set the text alignment in posts / pages.
+text_align:
+  # Available values: start | end | left | right | center | justify | justify-all | match-parent
+  desktop: justify
+  mobile: left
+
+# Reduce padding / margin indents on devices with narrow width.
+mobile_layout_economy: true
+
 codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
