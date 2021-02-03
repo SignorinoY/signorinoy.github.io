@@ -20,7 +20,7 @@ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ## 实例
 
 ```shell
-docker network create -d bridge web
+docker network create -d bridge application
 ```
 
 ### MySql/ MariaDB
@@ -33,7 +33,7 @@ docker run --detach \
     --volume /data/mysql/conf:/etc/mysql \
     --volume /data/mysql/logs:/var/log/mysql \
     --volume /data/mysql/data:/var/lib/mysql \
-    --network web \
+    --network application \
     -e MYSQL_ROOT_PASSWORD=my-secret-pw \
     mysql:latest
 ```
@@ -46,7 +46,7 @@ docker run --detach \
     --volume /data/mysql/conf:/etc/mysql \
     --volume /data/mysql/logs:/var/log/mysql \
     --volume /data/mysql/data:/var/lib/mysql \
-    --network web \
+    --network application \
     -e MYSQL_ROOT_PASSWORD=my-secret-pw \
     mariadb:latest
 ```
@@ -59,53 +59,8 @@ docker run --detach \
     --restart always \
     --publish 27017:27017 \
     --volume /data/mongo/data:/data/db \
-    --network web \
+    --network application \
     mongo:latest
-```
-
-### WordPress
-
-```shell
-docker run -detach \
-    --name wordpress \
-    --restart always \
-    --publish 8000:80 \
-    --network web \
-    wordpress:latest
-```
-
-### NextCloud
-
-```shell
-docker run -detach \
-    --name nextcloud \
-    --restart always \
-    --publish 8001:80 \
-    --volume /data/nextcloud:/var/www/html \
-    --network web \
-    nextcloud:latest
-```
-
-### Gitea
-
-```shell
-docker run --detach \
-    --name gitea \
-    --restart always \
-    --publish 8002:3000 --publish 8003:22 \
-    --volume /data/gitea:/data \
-    --network web \
-    gitea/gitea:latest
-```
-
-### NodeBB
-
-```shell
-docker exec -it mongo bash
-```
-
-```shell
-mongo
 ```
 
 ```shell
@@ -113,13 +68,67 @@ use admin
 db.createUser( { user: "admin", pwd: "my-secret-pw", roles: [ { role: "root", db: "admin" } ] } )
 ```
 
+### WordPress
+
 ```shell
-use nodebb
-db.createUser( { user: "nodebb", pwd: "nodebb", roles: [ { role: "readWrite", db: "nodebb" }, { role: "clusterMonitor", db: "admin" } ] } )
+create database wordpress;
+create user 'wordpress'@'wordpress.application' identified by 'wordpress';
+grant all privileges on wordpress.* to 'wordpress'@'wordpress.application' identified by 'wordpress';
+flush privileges;
 ```
 
 ```shell
-quit()
+docker run -detach \
+    --name wordpress \
+    --restart always \
+    --publish 81:80 \
+    --network application \
+    wordpress:latest
+```
+
+### NextCloud
+
+```shell
+create database nextcloud;
+create user 'nextcloud'@'nextcloud.application' identified by 'nextcloud';
+grant all privileges on nextcloud.* to 'nextcloud'@'nextcloud.application' identified by 'nextcloud';
+flush privileges;
+```
+
+```shell
+docker run -detach \
+    --name nextcloud \
+    --restart always \
+    --publish 82:80 \
+    --volume /data/nextcloud:/var/www/html \
+    --network application \
+    nextcloud:latest
+```
+
+### Gitea
+
+```shell
+create database gitea;
+create user 'gitea'@'gitea.application' identified by 'gitea';
+grant all privileges on gitea.* to 'gitea'@'gitea.application' identified by 'gitea';
+flush privileges;
+```
+
+```shell
+docker run --detach \
+    --name gitea \
+    --restart always \
+    --publish 83:3000 --publish 84:22 \
+    --volume /data/gitea:/data \
+    --network application \
+    gitea/gitea:latest
+```
+
+### NodeBB
+
+```shell
+use nodebb
+db.createUser( { user: "nodebb", pwd: "nodebb", roles: [ { role: "readWrite", db: "nodebb" }, { role: "clusterMonitor", db: "admin" } ] } )
 ```
 
 ```shell
@@ -127,6 +136,6 @@ docker run --detach \
     --name nodebb \
     --restart always \
     --publish 4567:4567 \
-    --network web \
+    --network application \
     nodebb/docker:latest
 ```
