@@ -17,20 +17,28 @@ apt-get install zsh
 
 ```shell
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+```shell
 # 国内镜像
 sh -c "$(wget -O- https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"
 ```
 
 ## 插件
 
-### `zsh-autosuggestions`
+`zsh-autosuggestions`
 
 ```shell
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 ```
 
-### `zsh-syntax-highlighting`
+`zsh-syntax-highlighting`
 
 ```shell
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+```diff
+- plugins=(git)
++ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 ```
