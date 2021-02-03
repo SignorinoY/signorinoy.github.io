@@ -19,38 +19,114 @@ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 
 ## 实例
 
+```shell
+docker network create -d bridge web
+```
+
+### MySql/ MariaDB
+
+```shell
+docker run --detach \
+    --name mysql \
+    --restart always \
+    --publish 3306:3306 \
+    --volume /data/mysql/conf:/etc/mysql \
+    --volume /data/mysql/logs:/var/log/mysql \
+    --volume /data/mysql/data:/var/lib/mysql \
+    --network web \
+    -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+    mysql:latest
+```
+
+```shell
+docker run --detach \
+    --name mariadb \
+    --restart always \
+    --publish 3306:3306 \
+    --volume /data/mysql/conf:/etc/mysql \
+    --volume /data/mysql/logs:/var/log/mysql \
+    --volume /data/mysql/data:/var/lib/mysql \
+    --network web \
+    -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+    mariadb:latest
+```
+
+### MongoDB
+
+```shell
+docker run --detach \
+    --name mongo \
+    --restart always \
+    --publish 27017:27017 \
+    --volume /data/mongo/data:/data/db \
+    --network web \
+    mongo:latest
+```
+
+### WordPress
+
+```shell
+docker run -detach \
+    --name wordpress \
+    --restart always \
+    --publish 8000:80 \
+    --network web \
+    wordpress:latest
+```
+
+### NextCloud
+
+```shell
+docker run -detach \
+    --name nextcloud \
+    --restart always \
+    --publish 8001:80 \
+    --volume /data/nextcloud:/var/www/html \
+    --network web \
+    nextcloud:latest
+```
+
 ### Gitea
 
 ```shell
 docker run --detach \
-    --publish 10080:3000 --publish 10022:22 \
     --name gitea \
     --restart always \
-    --volume /srv/gitea:/data \
+    --publish 8002:3000 --publish 8003:22 \
+    --volume /data/gitea:/data \
+    --network web \
     gitea/gitea:latest
 ```
 
 ### NodeBB
 
 ```shell
-docker network create -d bridge app
+docker exec -it mongo bash
+```
+
+```shell
+mongo
+```
+
+```shell
+use admin
+db.createUser( { user: "admin", pwd: "my-secret-pw", roles: [ { role: "root", db: "admin" } ] } )
+```
+
+```shell
+use nodebb
+db.createUser( { user: "nodebb", pwd: "nodebb", roles: [ { role: "readWrite", db: "nodebb" }, { role: "clusterMonitor", db: "admin" } ] } )
+```
+
+```shell
+quit()
 ```
 
 ```shell
 docker run --detach \
-    --publish 4567:4567 \
     --name nodebb \
     --restart always \
-    --network app \
-    nodebb/docker
-```
-
-```shell
-docker run --detach \
-    --publish 27017:27017 \
-    --name mongo \
-    --restart always \
-    --network app \
-    --volume /srv/mongo/data:/data/db \
-    mongo
+    --publish 4567:4567 \
+    --network web \
+    nodebb/docker:latest
 ```
