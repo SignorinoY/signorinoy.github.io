@@ -20,7 +20,8 @@ jobs:
           node-version: '14'
       - name: Setup Pandoc environment
         run: |
-          apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends pandoc
+          sudo apt-get update
+          sudo apt-get -y install --no-install-recommends pandoc
       - name: Setup Hexo environment
         run: |
           npm install -g hexo-cli
