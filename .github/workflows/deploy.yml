@@ -18,10 +18,13 @@ jobs:
         uses: actions/setup-node@v2.1.4
         with:
           node-version: '14'
-      - name: Setup pandoc environment
+      - name: Setup Pandoc environment
         run: |
           wget https://github.com/jgm/pandoc/releases/download/2.9/pandoc-2.9-1-amd64.deb
           sudo dpkg -i ./pandoc-2.9-1-amd64.deb
+      - name: Setup Hexo environment
+        run: |
+          npm install -g hexo-cli
       - name: Cache Dependencies
         uses: actions/cache@v2.1.4
         with:
@@ -33,7 +36,11 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
       - name: Deploy Blog
-        id: deploy
-        uses: sma11black/hexo-action@v1.0.4
-        with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }}
+        env:
+          DEPLOY_KEY: ${{ secrets.deploy_key }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          hexo g -d
