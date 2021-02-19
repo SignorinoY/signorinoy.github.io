@@ -43,4 +43,6 @@ jobs:
           echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name "SignorinoY"
+          git config --global user.email "meetziyang@gmail.com"
           hexo g -d
