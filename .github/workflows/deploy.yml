@@ -20,21 +20,19 @@ jobs:
           node-version: '14'
       - name: Setup Pandoc environment
         run: |
-          sudo apt-get update
-          sudo apt-get -y install --no-install-recommends pandoc
-      - name: Setup Hexo environment
-        run: |
-          npm install -g hexo-cli
+          wget https://github.com/jgm/pandoc/releases/download/2.9/pandoc-2.9-1-amd64.deb
+          sudo dpkg -i ./pandoc-2.9-1-amd64.deb
       - name: Cache Dependencies
         uses: actions/cache@v2.1.4
         with:
-          path: node_modules
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+        run: |
+          npm ci
       - name: Deploy Blog
         env:
           DEPLOY_KEY: ${{ secrets.deploy_key }}
@@ -45,4 +43,5 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name "SignorinoY"
           git config --global user.email "meetziyang@gmail.com"
+          npm install -g hexo-cli
           hexo g -d
