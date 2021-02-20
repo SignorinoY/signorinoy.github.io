@@ -111,6 +111,12 @@ symbols_count_time:
   wpm: 275
   suffix: "mins."
 
+emoji:
+  enable: true
+  className: github-emoji
+  styles:
+  customEmojis:
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
