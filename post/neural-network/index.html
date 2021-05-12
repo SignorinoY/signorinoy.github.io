@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="DudtdKuiM8ewkC5--j3YR4aaM7wz73ZwZfcJ1LEX0fk">
+  <meta name="msvalidate.01" content="743D41A43C9BC54DAA25F5848606702E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Sans+SC:300,300italic,400,400italic,700,700italic%7CNoto+Serif+SC:300,300italic,400,400italic,700,700italic%7CSource+Code+Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;xn--i0v668g.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:true,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:true,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="无论是线性回归还是逻辑回归都有这样一个缺点，即：当特征太多时，计算的负荷会非常大。普通的模型无法有效处理这么多的特征，这时候我们需要神经网络。 神经网络是由具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络">
+<meta property="og:url" content="https://梓阳.com/post/neural-network/">
+<meta property="og:site_name" content="SignorinoY">
+<meta property="og:description" content="无论是线性回归还是逻辑回归都有这样一个缺点，即：当特征太多时，计算的负荷会非常大。普通的模型无法有效处理这么多的特征，这时候我们需要神经网络。 神经网络是由具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/mp-neuron-model.svg">
+<meta property="og:image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/multi-layer-feedforward-neural-networks.svg">
+<meta property="article:published_time" content="2020-04-16T13:41:33.000Z">
+<meta property="article:modified_time" content="2021-05-12T16:53:19.310Z">
+<meta property="article:author" content="SignorinoY">
+<meta property="article:tag" content="神经网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/mp-neuron-model.svg">
+
+
+<link rel="canonical" href="https://梓阳.com/post/neural-network/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;梓阳.com&#x2F;post&#x2F;neural-network&#x2F;&quot;,&quot;path&quot;:&quot;post&#x2F;neural-network&#x2F;&quot;,&quot;title&quot;:&quot;神经网络&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>神经网络 | SignorinoY</title><script src="/js/config.js"></script>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145052500-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{&quot;tracking_id&quot;:&quot;UA-145052500-1&quot;,&quot;only_pageview&quot;:false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="SignorinoY" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">SignorinoY</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        
+            
+  <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+
+
+      
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E5%85%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">神经元模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8E%E5%A4%9A%E5%B1%82%E7%BD%91%E7%BB%9C"><span class="nav-number">2.</span> <span class="nav-text">感知机与多层网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%9F%E7%9F%A5%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">感知机模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%B1%82%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">2.2.</span> <span class="nav-text">多层前馈神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE%E9%80%86%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">误差逆传播算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">4.</span> <span class="nav-text">其他神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="nav-number">5.</span> <span class="nav-text">深度学习</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SignorinoY"
+      src="https://signorinoy.oss-cn-beijing.aliyuncs.com/assets/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SignorinoY</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NpZ25vcmlub3k=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;signorinoy"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOm1lZXR6aXlhbmdAZ21haWwuY29t" title="E-Mail → mailto:meetziyang@gmail.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuaml6aXRpLmZ1bi8=" title="https:&#x2F;&#x2F;www.jiziti.fun&#x2F;">✂JiZiTi</span>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://梓阳.com/post/neural-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/assets/images/avatar.jpg">
+      <meta itemprop="name" content="SignorinoY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SignorinoY">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          神经网络
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-16 21:41:33" itemprop="dateCreated datePublished" datetime="2020-04-16T21:41:33+08:00">2020-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>无论是线性回归还是逻辑回归都有这样一个缺点，即：当特征太多时，计算的负荷会非常大。普通的模型无法有效处理这么多的特征，这时候我们需要神经网络。</p>
+<p>神经网络是由具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应。</p>
+<span id="more"></span>
+<h2 id="神经元模型">神经元模型</h2>
+<p>神经网络中最基本的成分是神经元（neuron）模型，即上述定义中的“简单单元”。类似于生物神经网络，每个神经元接受来自其他神经元的信号改变自身的激活状态，将上述过程抽象为如下的“ M-P 神经元模型”。</p>
+<figure>
+<img data-src="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/mp-neuron-model.svg" alt="" /><figcaption>M-P神经元模型</figcaption>
+</figure>
+<p>神经元接受来自 n 个其他神经元传递过来的输入信号，这些输入信号通过带权重的连接进行传递，神经元接受到的总输入值将与神经元的阈值 <span class="math inline">\(\theta\)</span> 进行比较，然后通过“激活函数”处理以产生神经元的输出。</p>
+<div class="note "><p>理想中的激活函数是阶跃函数，它将输入值映射为输出值“0”或“1”。然而，阶跃函数具有不连续、不光滑等不太好的性质，因此实际常用 Sigmoid 函数作为激活函数，Sigmoid 函数能把可能在较大范围内变化的输入值挤压到 <span class="math inline">\((0,1)\)</span> 输出值范围内，因此有时也被称为“挤压函数”。</p>
+</div>
+<div class="note primary"><p>若使用线性函数 <span class="math inline">\(f\left(\boldsymbol{x}\right)=\boldsymbol{w}^T\boldsymbol{x}\)</span> 用作神经元激活函数有什么缺陷么？</p>
+<p>使用线性函数作为激活函数时，无论是在隐藏层还是在输出层（无论传递几层），其单元值（在使用激活函数之前）都还是输入 <span class="math inline">\(x\)</span> 的线性组合，这个时候的神经网络其实等价于逻辑回归的，若输出层也使用线性函数作为激活函数，那么就等价于线性回归。</p>
+</div>
+<p>阈值 <span class="math inline">\(\theta\)</span> 可看作一个固定输入为 -1.0 的“哑节点”所对应的连接权重 <span class="math inline">\(w_{n+1}\)</span>，这样权重和阈值的学习就可统一为权重的学习。</p>
+<p>把许多个这样的神经元按一定的层次结构连接起来，就得到了神经网络。</p>
+<h2 id="感知机与多层网络">感知机与多层网络</h2>
+<h3 id="感知机模型">感知机模型</h3>
+<p>感知机（Perceptron）由两层神经元组成，输入层接收外界输入信号后传递给输出层，输出层是“M-P神经元”，亦称“阈值逻辑单元”（threshold logic unit）。感知机模型的公式可表示为：</p>
+<p><span class="math display">\[
+\hat{y}=f\left(\boldsymbol{w}^T\boldsymbol{x}\right)
+\]</span></p>
+<p>其中，<span class="math inline">\(y_i\in\{0,1\}\)</span> 为感知机模型的输出；<span class="math inline">\(\boldsymbol{x}\in\mathbb{R}^{n+1}(\boldsymbol{x}_{n+1}\equiv-1)\)</span> 为样本的特征向量，是感知机模型的输入；<span class="math inline">\(\boldsymbol{w}\in\mathbb{R}^{n+1}\)</span> 为感知机模型的权重。</p>
+<p>感知机能容易地实现与、或、非运算。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">运算</th>
+<th style="text-align: center;"><span class="math inline">\(w_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(w_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\theta\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">与</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">或</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">非</td>
+<td style="text-align: center;">-0.6</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">-0.5</td>
+</tr>
+</tbody>
+</table>
+<p>更一般地，给定训练数据集，权重 <span class="math inline">\(w_i,(i=1,2,\dots,n+1)\)</span> 可通过学习得到， 感知机的学习规则较为简单，对训练数据 <span class="math inline">\(D=\{(\boldsymbol{x_1},y_1),(\boldsymbol{x_2},y_2),\ldots,(\boldsymbol{x_n},y_n)\}\)</span>，感知机的学习目标是求得对数据中的正负样本能够完全正确划分的超平面：</p>
+<p><span class="math display">\[
+\boldsymbol{w}^T\boldsymbol{x}=0
+\]</span></p>
+<p>给定损失函数：</p>
+<p><span class="math display">\[
+L(\boldsymbol{w})=\sum_{i=1}^n(\hat{y}_i-y_i)\boldsymbol{w}^T\boldsymbol{x_i}=\sum_{i=1}^n\sum_{j=1}^{n+1}w_jx_{i,j}(\hat{y}_i-y_i)
+\]</span></p>
+<p>基于梯度下降法，以目标的负梯度方向对参数 <span class="math inline">\(\boldsymbol{w}\)</span> 进行调整，给定学习率 <span class="math inline">\(\eta\in(0,1)\)</span>，有：</p>
+<p><span class="math display">\[
+\Delta w_i=-\eta\frac{\partial L(\boldsymbol{w})}{\partial w_i}=-\eta\sum_{j=1}^n(\hat{y}_j-y_j)x_{j,i}=\eta\sum_{j=1}^n(y_j-\hat{y}_j)x_{j,i}
+\]</span></p>
+<p>因此，感知机权重调整公式为：</p>
+<p><span class="math display">\[
+w_i\leftarrow w_i+\Delta w_i,\Delta w_i=\eta\sum_{j=1}^n(y_j-\hat{y}_j)x_{j,i}
+\]</span></p>
+<p>其中 <span class="math inline">\(\eta\in(0,1)\)</span> 称为学习率，感知机将根据错误的程度对权重进行调整，直至收敛为止。</p>
+<h3 id="多层前馈神经网络">多层前馈神经网络</h3>
+<p>感知机只有输出层神经元进行激活函数处理，即只拥有一层功能神经元，其学习能力非常有限，仅能处理线性可分问题。若为非线性可分问题（如“异或”问题），感知机在学习过程中将发生振荡，<span class="math inline">\(\boldsymbol{w}=(w_1;w_2;\dots;w_n;w_{n+1})\)</span> 无法稳定下来，不能求得合适解。</p>
+<p>为解决该问题，考虑使用多层功能神经元。例如，在输出层与输入层之间增加一层神经元，被称为隐层或隐含层，隐含层和输出层神经元都是拥有激活函数的功能神经元。</p>
+<p>一般的，常见的神经网络是如下所示的层级结构，每层神经元与下一次神经元全互连，神经元之间不存在同层连接，也不存在跨层连接。这样的神经网络结构通常称为“多层前馈神经网络”，其中输入层神经元接收外界输入，隐层（可包含多层）与输出层神经元对信号进行加工，最终结果由输出层神经元输出。</p>
+<figure>
+<img data-src="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/multi-layer-feedforward-neural-networks.svg" alt="" /><figcaption>多层前馈神经网络结构示意图</figcaption>
+</figure>
+<h2 id="误差逆传播算法">误差逆传播算法</h2>
+<p>误差逆传播算法（error BackPropagation）算法时迄今最为成功的神经网络学习算法，BP 算法不仅可用于多层前馈神经网络，还可同于其他类型的神经网络，例如训练递归神经网络。为方便讨论，给出如下定义：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\boldsymbol{x}\)</span></td>
+<td style="text-align: center;">输入向量</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\boldsymbol{y}\)</span></td>
+<td style="text-align: center;">目标向量</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(C\)</span></td>
+<td style="text-align: center;">误差函数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(L\)</span></td>
+<td style="text-align: center;">网络层数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\boldsymbol{W^l}=(w_{jk}^l)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(l-1\)</span> 层至 <span class="math inline">\(l\)</span> 层的权重，<span class="math inline">\(w_{jk}^l\)</span> 为 <span class="math inline">\(l-1\)</span> 层第 <span class="math inline">\(k\)</span> 个节点与 <span class="math inline">\(l\)</span> 层第 <span class="math inline">\(j\)</span> 个节点之间的权重</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\boldsymbol{b^l}=(b_k)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(l-1\)</span> 层至 <span class="math inline">\(l\)</span> 层的阈值，<span class="math inline">\(b_k\)</span> 为 <span class="math inline">\(l\)</span> 层第 <span class="math inline">\(k\)</span> 个节点的阈值</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(f^l\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(l\)</span> 层的激活函数</td>
+</tr>
+</tbody>
+</table>
+<p>因此，整个多层前馈神经网络可表示为多个函数的结合：</p>
+<p><span class="math display">\[
+g(\boldsymbol{x}):=f^{L}(\boldsymbol{W}^{L}f^{L-1}(\boldsymbol{W}^{L-1}\ldots f^{1}(\boldsymbol{W}^{1}\boldsymbol{x}+\boldsymbol{b}^1)\ldots+\boldsymbol{b}^{L-1})+\boldsymbol{b}^{L})
+\]</span></p>
+<p>给定单个训样例 <span class="math inline">\(\left(\boldsymbol{x},\boldsymbol{y}\right)\)</span> 上，其损失函数为：</p>
+<p><span class="math display">\[
+C(\boldsymbol{y},g(\boldsymbol{x}))
+\]</span></p>
+<p>为方便使用梯度下降法求解损失函数的最小值，定义</p>
+<ul>
+<li><span class="math inline">\(\boldsymbol{z}^l:=\boldsymbol{W}^l\boldsymbol{\alpha}^{l-1}+\boldsymbol{b}^l\)</span>：第 <span class="math inline">\(l\)</span> 层的加权输入</li>
+<li><span class="math inline">\(\boldsymbol{\alpha}^{l}:=f^l(\boldsymbol{z}^{l})\)</span>：第 <span class="math inline">\(l\)</span> 层的输出，其中<span class="math inline">\(\boldsymbol{\alpha}^{0}=\boldsymbol{x}\)</span></li>
+</ul>
+<p>因此，损失函数 <span class="math inline">\(C\)</span> 对于每一层的权重 <span class="math inline">\(\boldsymbol{W}^l\)</span> 的偏导函数为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial C}{\partial\boldsymbol{W}^l}&amp;=\frac{\partial C}{\partial\boldsymbol{\alpha}^L}\cdot\frac{\partial\boldsymbol{\alpha}^L}{\partial\boldsymbol{z}^L}\cdot\frac{\partial\boldsymbol{z}^{L}}{\partial\boldsymbol{\alpha}^{L-1}}\cdot\ldots\cdot\frac{\partial\boldsymbol{z}^{l+1}}{\partial\boldsymbol{\alpha}^{l}}\cdot\frac{\partial\boldsymbol{\alpha}^l}{\partial\boldsymbol{z}^l}\cdot\frac{\partial\boldsymbol{z}^{l}}{\partial\boldsymbol{W}^l}\\
+    &amp;=(f^{l})^{\prime}\cdot(\boldsymbol{W}^{l+1})^T\odot\ldots\odot(\boldsymbol{W}^{L-1})^T\cdot(f^{L})^{\prime}\odot\frac{\partial C}{\partial\boldsymbol{\alpha}^L}\cdot(\boldsymbol{a}_{l-1})^T
+\end{aligned}
+\]</span></p>
+<p>损失函数 <span class="math inline">\(C\)</span> 对于每一层的阈值 <span class="math inline">\(\boldsymbol{b^l}\)</span> 的偏导函数为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial C}{\partial\boldsymbol{b}^l}&amp;=\frac{\partial C}{\partial\boldsymbol{\alpha}^L}\cdot\frac{\partial\boldsymbol{\alpha}^L}{\partial\boldsymbol{z}^L}\cdot\frac{\partial\boldsymbol{z}^{L}}{\partial\boldsymbol{\alpha}^{L-1}}\cdot\ldots\cdot\frac{\partial\boldsymbol{z}^{l+1}}{\partial\boldsymbol{\alpha}^{l}}\cdot\frac{\partial\boldsymbol{\alpha}^l}{\partial\boldsymbol{z}^l}\cdot\frac{\partial\boldsymbol{z}^{l}}{\partial\boldsymbol{b}^l}\\
+    &amp;=(f^{l})^{\prime}\cdot(\boldsymbol{W}^{l+1})^T\odot\ldots\odot(\boldsymbol{W}^{L-1})^T\cdot(f^{L})^{\prime}\odot\frac{\partial C}{\partial\boldsymbol{\alpha}^L}
+\end{aligned}
+\]</span></p>
+<p>为方便计算神经网络中损失函数 <span class="math inline">\(C\)</span> 对于每一层的权重 <span class="math inline">\(\boldsymbol{W}^l\)</span> 与阈值 <span class="math inline">\(\boldsymbol{b^l}\)</span> 的偏导函数，引入辅助变量 <span class="math inline">\(\boldsymbol{\delta}^l\)</span>：</p>
+<p><span class="math display">\[
+\boldsymbol{\delta}^l:=(f^{l})^{\prime}\odot(\boldsymbol{W}^{l+1})^T\odot\ldots\odot(\boldsymbol{W}^{L-1})^T\cdot(f^{L})^{\prime}\odot\frac{\partial C}{\partial\boldsymbol{\alpha}^L}
+\]</span></p>
+<p>所以，<span class="math inline">\(\boldsymbol{\delta}^l\)</span> 可被循环计算如下：</p>
+<p><span class="math display">\[
+\left\{
+\begin{aligned}
+\boldsymbol{\delta}^{l-1}&amp;=(f^{l-1})^\prime\cdot(\boldsymbol{W}^{l})^{T}\boldsymbol{\delta}^l\\
+\boldsymbol{\delta}^{L}&amp;=(f^{L})^\prime\odot\frac{\partial C}{\partial\boldsymbol{\alpha}^L}
+\end{aligned}
+\right.
+\]</span></p>
+<p>所以，每一层的权重 <span class="math inline">\(\boldsymbol{W}^l\)</span> 与阈值 <span class="math inline">\(\boldsymbol{b^l}\)</span> 的偏导函数可表示为：</p>
+<p><span class="math display">\[
+\left\{
+\begin{aligned}
+\frac{\partial C}{\partial\boldsymbol{W}^l}&amp;=\boldsymbol{\delta}^l\cdot(\boldsymbol{a}_{l-1})^T\\
+\frac{\partial C}{\partial\boldsymbol{b}^l}&amp;=\boldsymbol{\delta}^l\\
+\end{aligned}
+\right.
+\]</span></p>
+<p>因此，多层前馈神经网络模型的学习算法（误差逆传播算法）如下：</p>
+<div class="note primary"><p><strong>输入：</strong> 训练集 <span class="math inline">\(D=\{(\boldsymbol{x_k},\boldsymbol{y_k})\}_{i=1}^m\)</span>；学习率 <span class="math inline">\(\eta\)</span>； <strong>输出：</strong> 连接权 <span class="math inline">\(\boldsymbol{W^l}\)</span>与阈值 <span class="math inline">\(\boldsymbol{b^l}\)</span> 确定的多层前馈神经网络；</p>
+<p><strong>过程：</strong></p>
+<ol type="1">
+<li>在 <span class="math inline">\((0,1)\)</span> 范围内随机初始化网络中所有连接权 <span class="math inline">\(\boldsymbol{W^l}\)</span> 与阈值 <span class="math inline">\(\boldsymbol{b^l}\)</span></li>
+<li>循环计算辅助变量 <span class="math inline">\(\boldsymbol{\delta}^l,l=(L,L-1,\ldots,1)\)</span></li>
+<li>计算梯度项 <span class="math inline">\(\frac{\partial C}{\partial\boldsymbol{W}^l}\)</span>，<span class="math inline">\(\frac{\partial C}{\partial\boldsymbol{b}^l}\)</span></li>
+<li>更新网络中所有连接权 <span class="math inline">\(\boldsymbol{W^l}=\boldsymbol{W^l}-\eta\frac{\partial C}{\partial\boldsymbol{W}^l}\)</span>，阈值 <span class="math inline">\(\boldsymbol{b^l}=\boldsymbol{b^l}-\eta\frac{\partial\mathcal{l}(\boldsymbol{w},b)}{\partial b}\)</span></li>
+<li>若模型收敛或达到其他条件，终止；否则转步（2）</li>
+</ol>
+</div>
+<ul>
+<li>网络结构：真正要决定的是隐藏层的层数和每个中间层的单元数，如果隐藏层数大于 1，确保每个隐藏层的单元个数相同，通常情况下隐藏层单元的个数越多越好。</li>
+</ul>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpZ25vcmlub1kvbWFyaW5l">程序实现<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="其他神经网络">其他神经网络</h2>
+<h2 id="深度学习">深度学习</h2>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>SignorinoY
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://梓阳.com/post/neural-network/" title="神经网络">https://梓阳.com/post/neural-network/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"># 神经网络</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/linear-model/" rel="prev" title="线性模型">
+                  <i class="fa fa-chevron-left"></i> 线性模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/machine-learning-derivation/" rel="next" title="《机器学习》公式推导">
+                  《机器学习》公式推导 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div><script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SignorinoY</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">76k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:19</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script class="next-config" data-name="pdf" type="application/json">{&quot;object_url&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;pdfobject@2.2.5&#x2F;pdfobject.min.js&quot;,&quot;integrity&quot;:&quot;sha256-YuNlP9i6s&#x2F;WH7EaU2kErloo9Vc85C3WVqhoMDgsEVpY&#x3D;&quot;},&quot;url&quot;:&quot;&#x2F;lib&#x2F;pdf&#x2F;web&#x2F;viewer&quot;}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script class="next-config" data-name="nprogress" type="application/json">{&quot;enable&quot;:true,&quot;spinner&quot;:true}</script>
+  <script src="/js/third-party/nprogress.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{&quot;enable&quot;:true,&quot;tags&quot;:&quot;none&quot;,&quot;js&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;mathjax@3.1.4&#x2F;es5&#x2F;tex-mml-chtml.js&quot;,&quot;integrity&quot;:&quot;sha256-ncNI9OXOS5Ek4tzVYiOMmN&#x2F;KKCPZ6V0Cpv2P&#x2F;zHntiA&#x3D;&quot;}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js" integrity="sha256-KK3rvmDcW72MSl9jzzNZWlQjZNrRzAuGhAQ+0SFOg7Q=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{&quot;enable&quot;:true,&quot;home&quot;:false,&quot;archive&quot;:false,&quot;delay&quot;:true,&quot;timeout&quot;:3000,&quot;priority&quot;:true,&quot;ignores&quot;:null,&quot;url&quot;:&quot;https:&#x2F;&#x2F;梓阳.com&#x2F;post&#x2F;neural-network&#x2F;&quot;}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{&quot;enable&quot;:true,&quot;github_id&quot;:&quot;SignorinoY&quot;,&quot;repo&quot;:&quot;SignorinoY.github.io&quot;,&quot;client_id&quot;:&quot;2487e2583974d4a72a01&quot;,&quot;client_secret&quot;:&quot;b83ec9c3984c1ae9f021d489c254238ba113ea68&quot;,&quot;admin_user&quot;:&quot;SignorinoY&quot;,&quot;distraction_free_mode&quot;:true,&quot;proxy&quot;:&quot;https:&#x2F;&#x2F;cors-anywhere.azm.workers.dev&#x2F;https:&#x2F;&#x2F;github.com&#x2F;login&#x2F;oauth&#x2F;access_token&quot;,&quot;language&quot;:&quot;zh-CN&quot;,&quot;js&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;gitalk@1.7.2&#x2F;dist&#x2F;gitalk.min.js&quot;,&quot;integrity&quot;:&quot;sha256-Pmj85ojLaPOWwRtlMJwmezB&#x2F;Qg8BzvJp5eTzvXaYAfA&#x3D;&quot;},&quot;path_md5&quot;:&quot;4e093bea3dbb8c90bfd92cb03ba15c32&quot;}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

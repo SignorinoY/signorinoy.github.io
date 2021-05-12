@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="DudtdKuiM8ewkC5--j3YR4aaM7wz73ZwZfcJ1LEX0fk">
+  <meta name="msvalidate.01" content="743D41A43C9BC54DAA25F5848606702E">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Sans+SC:300,300italic,400,400italic,700,700italic%7CNoto+Serif+SC:300,300italic,400,400italic,700,700italic%7CSource+Code+Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css" integrity="sha256-no0c5ccDODBwp+9hSmV5VvPpKwHCpbVzXHexIkupM6U=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js" integrity="sha256-a5YRB27CcBwBFcT5EF/f3E4vzIqyHrSR878nseNYw64=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;xn--i0v668g.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:true,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:true,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="最大期望算法（Expectation-maximization algorithm，又译期望最大化算法）在统计中被用于寻找，依赖于不可观察的隐性变量的概率模型中，参数的最大似然估计。 在统计计算中，最大期望（EM）算法是在概率模型中寻找参数最大似然估计或者最大后验估计的算法，其中概率模型依赖于无法观测的隐变量。最大期望算法经常用在机器学习和计算机视觉的数据聚类（Data Clustering）领域">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EM 算法">
+<meta property="og:url" content="https://梓阳.com/post/em-algorithm/">
+<meta property="og:site_name" content="SignorinoY">
+<meta property="og:description" content="最大期望算法（Expectation-maximization algorithm，又译期望最大化算法）在统计中被用于寻找，依赖于不可观察的隐性变量的概率模型中，参数的最大似然估计。 在统计计算中，最大期望（EM）算法是在概率模型中寻找参数最大似然估计或者最大后验估计的算法，其中概率模型依赖于无法观测的隐变量。最大期望算法经常用在机器学习和计算机视觉的数据聚类（Data Clustering）领域">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/em-algorithm-gaussian-mixture-model-sample.png">
+<meta property="article:published_time" content="2019-06-19T11:26:44.000Z">
+<meta property="article:modified_time" content="2021-05-12T16:53:19.310Z">
+<meta property="article:author" content="SignorinoY">
+<meta property="article:tag" content="EM 算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/em-algorithm-gaussian-mixture-model-sample.png">
+
+
+<link rel="canonical" href="https://梓阳.com/post/em-algorithm/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;梓阳.com&#x2F;post&#x2F;em-algorithm&#x2F;&quot;,&quot;path&quot;:&quot;post&#x2F;em-algorithm&#x2F;&quot;,&quot;title&quot;:&quot;EM 算法&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>EM 算法 | SignorinoY</title><script src="/js/config.js"></script>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145052500-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{&quot;tracking_id&quot;:&quot;UA-145052500-1&quot;,&quot;only_pageview&quot;:false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="SignorinoY" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">SignorinoY</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        
+            
+  <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+
+
+      
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#gaussian-mixture-model"><span class="nav-number">1.</span> <span class="nav-text">Gaussian Mixture Model</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SignorinoY"
+      src="https://signorinoy.oss-cn-beijing.aliyuncs.com/assets/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SignorinoY</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NpZ25vcmlub3k=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;signorinoy"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOm1lZXR6aXlhbmdAZ21haWwuY29t" title="E-Mail → mailto:meetziyang@gmail.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly93d3cuaml6aXRpLmZ1bi8=" title="https:&#x2F;&#x2F;www.jiziti.fun&#x2F;">✂JiZiTi</span>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://梓阳.com/post/em-algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://signorinoy.oss-cn-beijing.aliyuncs.com/assets/images/avatar.jpg">
+      <meta itemprop="name" content="SignorinoY">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SignorinoY">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EM 算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-19 19:26:44" itemprop="dateCreated datePublished" datetime="2019-06-19T19:26:44+08:00">2019-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">统计学</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最大期望算法（Expectation-maximization algorithm，又译期望最大化算法）在统计中被用于寻找，依赖于不可观察的隐性变量的概率模型中，参数的最大似然估计。</p>
+<p>在统计计算中，最大期望（EM）算法是在概率模型中寻找参数最大似然估计或者最大后验估计的算法，其中概率模型依赖于无法观测的隐变量。最大期望算法经常用在机器学习和计算机视觉的数据聚类（Data Clustering）领域。最大期望算法经过两个步骤交替进行计算，第一步是计算期望（E），利用对隐藏变量的现有估计值，计算其最大似然估计值；第二步是最大化（M），最大化在 E 步上求得的最大似然值来计算参数的值。M 步上找到的参数估计值被用于下一个E步计算中，这个过程不断交替进行。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<span id="more"></span>
+<h3 id="gaussian-mixture-model">Gaussian Mixture Model</h3>
+<p>考虑 Gaussian Mixture Model：<span class="math inline">\(X\sim qN(\mu_1,\sigma_1^2)+(1-q)N(\mu_2,\sigma_2^2)\)</span>，请用 EM 算法推导 <span class="math inline">\(\theta=\left(q,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2\right)\)</span> 的估计，并用数据求得其估计值。</p>
+<p>为引入 EM 算法，我们通过引入一个隐变量 <span class="math inline">\(Z\)</span> 来描述 Gaussian Mixture Model，其中：</p>
+<p><span class="math display">\[x\mid(z=1)\sim N(\mu_1,\sigma_1^2),x\mid(z=2)\sim N(\mu_2,\sigma_2^2).\]</span></p>
+<p><span class="math display">\[P(Z=1)=\tau_1=q,P(Z=2)=\tau_2=1-q.\]</span></p>
+<p>所以：<span class="math inline">\(p(x)=\sum_zp(z)p(x\mid z)\)</span></p>
+<p>为估计 Gaussian Mixture Model 的参数 <span class="math inline">\(\theta=\left(q,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2\right)\)</span>，写出完整数据的对数似然函数如下：</p>
+<p><span class="math display">\[\log{L(\theta;\mathbf{x},\mathbf{z})}=\log{p(\mathbf{x},\mathbf{z}\mid\theta)}=\sum_{i=1}^{n}\log{p(x_i,z_i\mid\theta)}\]</span></p>
+<p><span class="math display">\[\because p(x_i,z_i)=p(z_i)p(x_i\mid z_i)=\prod_{j=1}^{2}\left[f(x_i; \mu_j,\sigma_j)\tau_j\right]^{\mathbb{I}(z_i=j)}\]</span></p>
+<p><span class="math display">\[\begin{aligned}\therefore\log{L(\theta;\mathbf{x},\mathbf{z})}&amp;=\log{p(\mathbf{x},\mathbf{z}\mid\theta)}\\&amp;=\sum_{i=1}^n\sum_{j=1}^{2}\mathbb{I}(z_i=j)\log{\left[f(x_i; \mu_j,\sigma_j)\tau_j\right]}\\&amp;=\sum_{i=1}^n\sum_{j=1}^{2}\mathbb{I}(z_i=j)\left[\log{\tau_j-\frac{1}{2}\log{\sigma_j^2}-\frac{(x_i-\mu_j)^2}{2\sigma_j^2}-\frac{1}{2} \log{(2\pi)}}\right]\end{aligned}\]</span></p>
+<p><strong>E-Step：</strong> 在已有观测数据 <span class="math inline">\(\mathbf{x}\)</span> 及第 <span class="math inline">\(t\)</span> 步估计值 <span class="math inline">\(\theta=\theta^{(t)}\)</span> 的条件下，求出基于完全数据的对数似然函数的期望。</p>
+<p><span class="math display">\[\begin{aligned}Q_{\theta^{(t)}}(\theta) &amp;= E_{\theta^{(t)}}\left[\log{L(\theta; \mathbf{x},\mathbf{z})} \mid \mathbf{x} \right]\\&amp;= E_{\theta^{(t)}} \left\{\sum_{i=1}^n\sum_{j=1}^{2} \mathbb{I}(z_i=j) \left[\log{\tau_j - \frac{1}{2} \log{\sigma_j^2} - \frac{(x_i-\mu_j)^2}{2\sigma_j^2} - \frac{1}{2} \log{(2\pi)}}\right] \mid \mathbf{x}\right\}\\&amp;= \sum_{i=1}^n E_{\theta^{(t)}} \left\{\sum_{j=1}^{2} \mathbb{I}(z_i=j) \left[\log{\tau_j - \frac{1}{2} \log{\sigma_j^2} - \frac{(x_i-\mu_j)^2}{2\sigma_j^2} - \frac{1}{2} \log{(2\pi)}}\right] \mid x_i\right\}\\&amp;= \sum_{i=1}^n \sum_{j=1}^{2} \left[\log{\tau_j - \frac{1}{2} \log{\sigma_j^2} - \frac{(x_i-\mu_j)^2}{2{\sigma_j}^2} - \frac{1}{2} \log{(2\pi)}}\right] E_{\theta^{(t)}} \left[ \mathbb{I}(z_i=j) \mid x_i\right]\end{aligned}\]</span></p>
+<p><span class="math display">\[\because T_{j,i}^{(t)} := P(Z_i=j \mid X_i=x_i;\theta^{(t)})=\frac{\tau_j^{(t)}f(x_i;\mu_j^{(t)},{\sigma_j^2}^{(t)})}{\tau_1^{(t)}f(x_i;\mu_1^{(t)},{\sigma_1^2}^{(t)})+\tau_2^{(t)}f(x_i;\mu_2^{(t)},{\sigma_2^2}^{(t)})}.\]</span></p>
+<p><span class="math display">\[\therefore E_{\theta^{(t)}} \left[ \mathbb{I}(z_i=j) \mid x_i\right] = T_{j,i}^{(t)}\]</span></p>
+<p><span class="math display">\[\therefore Q_{\theta^{(t)}}(\theta) = \sum_{i=1}^n \sum_{j=1}^{2} \left[\log{\tau_j - \frac{1}{2} \log{\sigma_j^2} - \frac{(x_i-\mu_j)^2}{2{\sigma_j}^2} - \frac{1}{2} \log{(2\pi)}}\right] T_{j,i}^{(t)}\]</span></p>
+<p><strong>M-Step：</strong> 求 <span class="math inline">\(Q_{\theta^{(t)}}(\theta)\)</span> 关于 <span class="math inline">\(\theta\)</span> 的最大值 <span class="math inline">\(\theta^{(t+1)}\)</span>，即找到<span class="math inline">\(\theta^{(t+1)}\)</span> 使得</p>
+<p><span class="math display">\[\theta^{(t+1)} = {\arg\max}_\theta Q_{\theta^{(t)}}(\theta).\]</span></p>
+<p>首先，我们考虑 <span class="math inline">\(\boldsymbol{\tau}\)</span> ，其中 <span class="math inline">\(\tau_1+\tau_2=1\)</span>：</p>
+<p><span class="math display">\[\begin{aligned}\boldsymbol{\tau}^{(t+1)} &amp;= {\arg\max}_{\boldsymbol{\tau}} Q_{\theta^{(t)}}(\theta)\\&amp;= {\arg\max}_{\boldsymbol{\tau}} \left\{\left[\sum_{i=1}^n T_{1,i}^{(t)}\right]\log\tau_1 + \left[\sum_{i=1}^n T_{2,i}^{(t)}\right]\log\tau_2\right\}\end{aligned}\]</span></p>
+<p>将 <span class="math inline">\(\tau_2\)</span> 用 <span class="math inline">\(\tau_1\)</span> 代换后，对 <span class="math inline">\(\tau_1\)</span> 求偏导可得：</p>
+<p><span class="math display">\[\frac{\partial Q_{\theta^{(t)}}(\theta)}{\partial\tau_1} = \frac{\sum_{i=1}^n T_{1,i}^{(t)}}{\tau_1} - \frac{\sum_{i=1}^n T_{2,i}^{(t)}}{1-\tau_1} = 0 \quad (\tau_1+\tau_2=1)\]</span></p>
+<p><span class="math display">\[\therefore \tau_1^{(t+1)} = \frac{\sum_{i=1}^{n} T_{1,i}^{(t)}}{\sum_{i=1}^{n}\left(T_{1,i}^{(t)}+T_{2,i}^{(t)}\right)}=\frac{1}{n} \sum_{i=1}^{n} T_{1,i}^{(t)} \quad \tau_2^{(t+1)} = 1 - \tau_1^{(t+1)} = \frac{1}{n} \sum_{i=1}^{n} T_{2,i}^{(t)}.\]</span></p>
+<p>接着我们考虑 <span class="math inline">\((\mu_1,\sigma_1^2)\)</span>：</p>
+<p><span class="math display">\[\begin{aligned}\left(\mu_1^{(t+1)},{\sigma_1^2}^{(t+1)}\right) &amp;= {\arg\max}_{\mu_1,\sigma_1^2} Q\left(\theta | \theta^{(t)}\right) \\&amp;= {\arg\max}_{\mu_1,\sigma_1^2} \sum_{i=1}^{n} T_{1,i}^{(t)}\left\{-\frac{1}{2} \log {\sigma_1} - \frac{(x_i-\mu_1)^2}{2{\sigma_1}^2}\right\}\end{aligned}\]</span></p>
+<p>对 <span class="math inline">\(\mu_1,\sigma_1^2\)</span> 分别求偏导可得：</p>
+<p><span class="math display">\[\frac{\partial Q_{\theta^{(t)}}(\theta)}{\partial\mu_1} = \sum_{i=1}^{n} T_{1,i}^{(t)}\frac{x_i-\mu_i}{\sigma_1^2} = 0\]</span></p>
+<p><span class="math display">\[\frac{\partial Q_{\theta^{(t)}}(\theta)}{\partial\sigma_1^2} = \sum_{i=1}^{n} T_{1,i}^{(t)}\left[-\frac{1}{2\sigma_1^2} + \frac{(x_i-\mu_1)^2}{2\sigma_1^4}\right] = 0\]</span></p>
+<p><span class="math display">\[\therefore \mu_1^{(t+1)} = \frac{\sum_{i=1}^n T_{1,i}^{(t)} x_i}{\sum_{i=1}^n T_{1,i}^{(t)}} \quad {\sigma_1^2}^{(t+1)} = \frac{\sum_{i=1}^n T_{1,i}^{(t)} (x_i - \mu_1^{(t+1)})^2}{\sum_{i=1}^n T_{1,i}^{(t)}}.\]</span></p>
+<p>最后，我们考虑 <span class="math inline">\((\mu_2,\sigma_2^2)\)</span>，其求解方法与上述相同：</p>
+<p><span class="math display">\[\therefore \mu_2^{(t+1)} = \frac{\sum_{i=1}^n T_{2,i}^{(t)} x_i}{\sum_{i=1}^n T_{2,i}^{(t)}} \quad {\sigma_2^2}^{(t+1)} = \frac{\sum_{i=1}^n T_{2,i}^{(t)} (x_i - \mu_2^{(t+1)})^2}{\sum_{i=1}^n T_{2,i}^{(t)}}.\]</span></p>
+<p><strong>终止：</strong> 重复 E-Step 与 M-Step 直至收敛，即，对于给定的 <span class="math inline">\(\varepsilon&gt;0\)</span> ，<span class="math inline">\(Q_{\theta^{(t)}}(\theta) - Q_{\theta^{(t-1)}}(\theta) \leq \varepsilon\)</span>，即可得到 <span class="math inline">\(\theta\)</span> 的极大似然估计。</p>
+<p>由此我们可以得到该高斯混合模型参数估计的 EM 算法如下：</p>
+<figure>
+<img data-src="https://signorinoy.oss-cn-beijing.aliyuncs.com/upload/images/em-algorithm-gaussian-mixture-model-sample.png" alt="" /><figcaption>该高斯混合模型参数估计的 EM 算法</figcaption>
+</figure>
+<p>在得到估计该高斯混合模型的 EM 算法后，由于 EM 算法对初始值设置极为敏感，我们根据观测到的数据分布情况设定高斯混合模型的初始参数如下：</p>
+<p><span class="math display">\[q = 0.7,\mu_1=1,\mu_2=2,\sigma_1^2=2,\sigma_2^2=2\]</span></p>
+<p>在设定高斯混合模型的初始参数后，使用上述算法对其进行迭代，最终得到：</p>
+<p><span class="math display">\[q = 0.45,\mu_1=0,\mu_2=2,\sigma_1^2=1,\sigma_2^2=1\]</span></p>
+<p>Python源程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> norm</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.<span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">data = pd.read_csv(<span class="string">&quot;../data/EM.csv&quot;</span>,index_col=<span class="number">0</span>)</span><br><span class="line">X = np.array(data.x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制数据分布图</span></span><br><span class="line">sns.distplot(X)</span><br><span class="line">plt.savefig(<span class="string">&quot;distplot.png&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定高斯混合模型初始参数</span></span><br><span class="line">n_samples = X.shape[<span class="number">0</span>]</span><br><span class="line">n_components = <span class="number">2</span></span><br><span class="line">tau = np.array([<span class="number">0.7</span>,<span class="number">0.3</span>])</span><br><span class="line">mu = np.array([<span class="number">1</span>,<span class="number">2</span>])</span><br><span class="line">sigma2 = np.array([<span class="number">2</span>,<span class="number">2</span>])</span><br><span class="line">max_iters = <span class="number">100</span></span><br><span class="line">T = np.zeros((n_components,n_samples))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 EM 算法进行迭代</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(max_iters):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n_components):</span><br><span class="line">        T[i] = tau[i] * norm.pdf(X,mu[i],np.sqrt(sigma2[i]))</span><br><span class="line">    T = T / np.<span class="built_in">sum</span>(T,axis=<span class="number">0</span>)</span><br><span class="line">    tau = np.<span class="built_in">sum</span>(T,axis=<span class="number">1</span>)/n_samples</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n_components):</span><br><span class="line">        mu[i] = np.<span class="built_in">sum</span>(T[i] * X,axis=<span class="number">0</span>) / np.<span class="built_in">sum</span>(T[i],axis=<span class="number">0</span>)</span><br><span class="line">        sigma2[i] = np.<span class="built_in">sum</span>(T[i] * np.power(X - mu[i],<span class="number">2</span>),axis=<span class="number">0</span>) / np.<span class="built_in">sum</span>(T[i],axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出估计结果</span></span><br><span class="line">print(tau,mu,sigma2)</span><br></pre></td></tr></table></figure>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRXhwZWN0YXRpb24lRTIlODAlOTNtYXhpbWl6YXRpb25fYWxnb3JpdGht">https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>SignorinoY
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://梓阳.com/post/em-algorithm/" title="EM 算法">https://梓阳.com/post/em-algorithm/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/EM-%E7%AE%97%E6%B3%95/" rel="tag"># EM 算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/post/r-python-graph-gallery/" rel="prev" title="The R\Python Graph Gallery">
+                  <i class="fa fa-chevron-left"></i> The R\Python Graph Gallery
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/post/git-tutorial/" rel="next" title="Git 使用指南">
+                  Git 使用指南 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div><script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SignorinoY</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">76k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:19</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script class="next-config" data-name="pdf" type="application/json">{&quot;object_url&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;pdfobject@2.2.5&#x2F;pdfobject.min.js&quot;,&quot;integrity&quot;:&quot;sha256-YuNlP9i6s&#x2F;WH7EaU2kErloo9Vc85C3WVqhoMDgsEVpY&#x3D;&quot;},&quot;url&quot;:&quot;&#x2F;lib&#x2F;pdf&#x2F;web&#x2F;viewer&quot;}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+  <script class="next-config" data-name="nprogress" type="application/json">{&quot;enable&quot;:true,&quot;spinner&quot;:true}</script>
+  <script src="/js/third-party/nprogress.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{&quot;enable&quot;:true,&quot;tags&quot;:&quot;none&quot;,&quot;js&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;mathjax@3.1.4&#x2F;es5&#x2F;tex-mml-chtml.js&quot;,&quot;integrity&quot;:&quot;sha256-ncNI9OXOS5Ek4tzVYiOMmN&#x2F;KKCPZ6V0Cpv2P&#x2F;zHntiA&#x3D;&quot;}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js" integrity="sha256-KK3rvmDcW72MSl9jzzNZWlQjZNrRzAuGhAQ+0SFOg7Q=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{&quot;enable&quot;:true,&quot;home&quot;:false,&quot;archive&quot;:false,&quot;delay&quot;:true,&quot;timeout&quot;:3000,&quot;priority&quot;:true,&quot;ignores&quot;:null,&quot;url&quot;:&quot;https:&#x2F;&#x2F;梓阳.com&#x2F;post&#x2F;em-algorithm&#x2F;&quot;}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{&quot;enable&quot;:true,&quot;github_id&quot;:&quot;SignorinoY&quot;,&quot;repo&quot;:&quot;SignorinoY.github.io&quot;,&quot;client_id&quot;:&quot;2487e2583974d4a72a01&quot;,&quot;client_secret&quot;:&quot;b83ec9c3984c1ae9f021d489c254238ba113ea68&quot;,&quot;admin_user&quot;:&quot;SignorinoY&quot;,&quot;distraction_free_mode&quot;:true,&quot;proxy&quot;:&quot;https:&#x2F;&#x2F;cors-anywhere.azm.workers.dev&#x2F;https:&#x2F;&#x2F;github.com&#x2F;login&#x2F;oauth&#x2F;access_token&quot;,&quot;language&quot;:&quot;zh-CN&quot;,&quot;js&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;gitalk@1.7.2&#x2F;dist&#x2F;gitalk.min.js&quot;,&quot;integrity&quot;:&quot;sha256-Pmj85ojLaPOWwRtlMJwmezB&#x2F;Qg8BzvJp5eTzvXaYAfA&#x3D;&quot;},&quot;path_md5&quot;:&quot;1ef466d19a86f3080328d9c7db497a80&quot;}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

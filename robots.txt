@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+
+Sitemap: https://xn--i0v668g.com/sitemap.xml
+Sitemap: https://xn--i0v668g.com/baidusitemap.xml
