@@ -11,8 +11,6 @@ The amount of mobile phones, wearable devices, and autonomous vehicles are incre
 
 Standing in front of the scene of improving device/user's experience by establishing some models, how to use these distributed networks is a challenge but interesting field.
 
-<!--more-->
-
 - With these distributed networks' computational power, it's natural to get the idea, how to make full use of the computational power. 
 
 - And with the storage and rich sensors on each devices (such as cameras, microphones, and GPS), it's easier to access to large amount of data, most of them are private in nature. So the idea of us is also nature, how to make full use of the data, meanwhile protecting users' privacy.
@@ -74,9 +72,13 @@ Specially, another important finding in this paper, which found that we must ave
 
 `FedAvg` method is a version of implement of Figure 1.(a), which build an global model for each nodes in the distributed networks. This method is simple but effective, and has also been proof that, it can convergence  in the situations of IID and Non-IID by ??? (????).
 
-- MOCHA 
+### `MOCHA`  Method by Smith (2017)
 
-- Zhao
+ This method was inspired by multi-task learning, can allow for personalization by learning separate but related models for each device while leveraging a shared representation.
+
+### `VIRTUAL` Method by Corinzia (2021)
+
+
 
 ## Recurrent Experimental Results
 
